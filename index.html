@@ -1,1 +1,71 @@
-
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>لمة صحاب 🎉</title>
+<style>
+:root{--bg:#111322;--card:#20243c;--pink:#ff6fae;--cyan:#67e8f9;--yellow:#ffe082;--text:#fff}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#29254c,var(--bg) 60%);color:var(--text);font-family:system-ui,Tahoma,Arial;min-height:100vh}
+.wrap{max-width:980px;margin:auto;padding:16px}.hero{text-align:center;padding:20px 8px}.hero h1{font-size:clamp(2rem,7vw,3.5rem);margin:4px;color:var(--pink);text-shadow:0 4px #72264d}.hero p{color:#d7d9ef}
+.card{background:#20243ceF;border:1px solid #454969;border-radius:20px;padding:16px;margin:12px 0;box-shadow:0 10px 30px #0003}
+input,select,button,textarea{font:inherit;border:0;border-radius:12px;padding:12px}input,select,textarea{background:#f4f5ff;color:#17172b;width:100%;margin:5px 0}
+button{cursor:pointer;background:linear-gradient(135deg,var(--pink),#ff9c78);color:#301326;font-weight:800;box-shadow:0 4px 0 #8b3d68;transition:transform .1s}button:active{transform:translateY(3px);box-shadow:0 1px 0 #8b3d68}
+.secondary{background:#343a5b;color:white;box-shadow:0 4px 0 #1a1d33}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:10px}.mode{min-height:125px;text-align:center;padding:16px;background:#2a2e4b;border:1px solid #4c5278;border-radius:17px;cursor:pointer}.mode .emoji{font-size:2.2rem}.mode h3{margin:5px 0}.mode p{margin:0;font-size:.85rem;color:#d1d4ec}.row{display:flex;gap:8px;flex-wrap:wrap}.row>*{flex:1;min-width:120px}.hidden{display:none!important}.pill{display:inline-block;padding:5px 10px;background:#343a5b;border-radius:20px;margin:3px}.players{display:flex;gap:8px;flex-wrap:wrap}.player{background:#343a5b;border:1px solid #555d86;border-radius:14px;padding:8px 12px}.big{font-size:clamp(1.3rem,4vw,2rem);text-align:center;padding:20px 8px;min-height:90px}.wheel{width:210px;height:210px;max-width:65vw;max-height:65vw;border-radius:50%;margin:15px auto;background:conic-gradient(#ff6fae 0 45deg,#ffe082 45deg 90deg,#67e8f9 90deg 135deg,#b7f7a5 135deg 180deg,#b69cff 180deg 225deg,#ff9c78 225deg 270deg,#67e8f9 270deg 315deg,#ffe082 315deg);border:7px solid #fff;display:flex;align-items:center;justify-content:center;color:#17172b;font-weight:900;font-size:1.2rem;box-shadow:0 0 0 5px #ffffff22;transition:transform 2s cubic-bezier(.12,.8,.2,1)}.avatar{font-size:2.5rem;text-align:center}.status{color:var(--yellow);min-height:24px}.chatlog{background:#15182b;border-radius:12px;padding:10px;height:140px;overflow:auto}.msg{padding:5px;border-bottom:1px solid #ffffff12;overflow-wrap:anywhere}small{color:#bfc5e4}footer{text-align:center;color:#969cbd;padding:18px}
+</style>
+</head>
+<body><div class="wrap">
+<header class="hero"><div style="font-size:2rem">🎉 💖 🕹️</div><h1>لَمّة صحاب</h1><p>صراحة وتحدي • ألغاز • عجلة الحظ • شخصيات • شات</p></header>
+<section class="card" id="setup">
+<h2>👋 جهّز دخولك</h2><div class="row"><div><label>اسمك</label><input id="playerName" maxlength="18" placeholder="اكتب اسمك"></div><div><label>اختار شخصيتك</label><select id="avatar"><option>😎</option><option>🦊</option><option>🐼</option><option>🐸</option><option>🦄</option><option>🐱</option><option>🧑‍🚀</option><option>👑</option></select></div></div>
+<div class="row"><button id="createRoom">✨ إنشاء غرفة</button><button id="enterRoom" class="secondary">🔑 دخول بكود</button></div>
+<div class="row"><input id="roomCode" maxlength="8" placeholder="كود الغرفة (مثلاً FRIEND7)"><button id="copyCode" class="secondary">نسخ الكود</button></div>
+<div id="setupStatus" class="status"></div>
+<small>هذه نسخة تجريبية بواجهة كاملة. الغرف والشات في هذا الملف تجريبية على نفس الجهاز؛ ربط أجهزة مختلفة يحتاج سيرفرًا أونلاين.</small>
+</section>
+<section id="lobby" class="card hidden"><div class="row"><div><h2>🏠 غرفة الأصدقاء</h2><span>كود الغرفة: <b id="roomShow"></b></span></div><button id="leave" class="secondary">خروج</button></div>
+<h3>👥 اللاعبين</h3><div id="players" class="players"></div><p><small>في النسخة التجريبية يظهر اللاعب الذي سجل على هذا الجهاز فقط.</small></p>
+<h3>اختاروا اللعبة</h3><div class="grid">
+<div class="mode" data-game="truth"><div class="emoji">❤️</div><h3>صراحة وتحدي</h3><p>أسئلة ومواقف مضحكة</p></div>
+<div class="mode" data-game="quiz"><div class="emoji">🧠</div><h3>أسئلة وذكاء</h3><p>ألغاز وتحديات عقل</p></div>
+<div class="mode" data-game="wheel"><div class="emoji">🎡</div><h3>عجلة الحظ</h3><p>اختار مين عليه الدور</p></div>
+<div class="mode" data-game="world"><div class="emoji">🏡</div><h3>العالم الافتراضي</h3><p>شخصيتك ومكانك الخيالي</p></div>
+<div class="mode" data-game="mix"><div class="emoji">🎉</div><h3>كل الألعاب</h3><p>خلطة من كل الأنواع</p></div>
+</div>
+<h3>💬 شات الغرفة (تجريبي)</h3><div id="chatlog" class="chatlog"></div><div class="row"><input id="chatInput" maxlength="160" placeholder="اكتب رسالة لطيفة..."><button id="sendChat">إرسال</button></div><div id="lobbyStatus" class="status"></div>
+</section>
+<section id="play" class="card hidden"><div class="row"><h2 id="gameTitle">اللعبة</h2><button class="secondary" id="backLobby">رجوع للغرفة</button></div><div id="gameBody"></div></section>
+<footer>💫 العبوا باحترام ومن غير مشاركة معلومات شخصية.</footer>
+</div>
+<script>
+const $=s=>document.querySelector(s), $$=s=>document.querySelectorAll(s);
+let me={name:'صاحبنا',avatar:'😎'},room='',activeGame='',score=0,worldX=50,worldY=50;
+const truthQ=[
+['صراحة','إيه أكتر حاجة بتضحكك؟'],['صراحة','لو تقدر تسافر أي مكان، تختار فين؟'],['تحدي','قول 3 أكلات بتحبها في 5 ثواني!'],['تحدي','قلّد صوت شخصية كرتونية.'],['صراحة','إيه مهارة نفسك تتعلمها؟'],['تحدي','اتكلم كأنك مذيع أخبار لمدة 10 ثواني.'],['صراحة','إيه أحلى ذكرى مع أصحابك؟'],['تحدي','قول جملة صعبة من غير ما تضحك.'],['صراحة','لو عندك قوة خارقة تختار إيه؟'],['تحدي','امدح كل لاعب بكلمة لطيفة.']];
+const quizzes=[
+{q:'ما الكوكب المعروف بالكوكب الأحمر؟',a:['المريخ','الزهرة','زحل'],correct:0},
+{q:'كم ضلعًا للمثلث؟',a:['4','3','5'],correct:1},
+{q:'ما الحيوان المعروف بسفينة الصحراء؟',a:['الحصان','الجمل','الفيل'],correct:1},
+{q:'كم يومًا في الأسبوع؟',a:['7','5','10'],correct:0},
+{q:'ما أكبر محيط على الأرض؟',a:['الهندي','الأطلسي','الهادئ'],correct:2},
+{q:'ما ناتج 8 × 7؟',a:['54','56','64'],correct:1},
+{q:'أي طائر لا يطير غالبًا ويعيش في القطب الجنوبي؟',a:['البطريق','النسر','الحمامة'],correct:0},
+{q:'ما لون مزج الأزرق والأصفر؟',a:['أخضر','بنفسجي','برتقالي'],correct:0}];
+function setStatus(id,t){$(id).textContent=t}
+function setupRoom(c){room=c;$('#roomCode').value=c;$('#roomShow').textContent=c;$('#setup').classList.add('hidden');$('#lobby').classList.remove('hidden');$('#players').innerHTML=`<span class="player">${me.avatar} ${escapeHtml(me.name)} <small>(أنت)</small></span>`;setStatus('#lobbyStatus','الغرفة جاهزة! اختاروا لعبة.');$('#chatlog').innerHTML='';}
+function escapeHtml(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+$('#createRoom').onclick=()=>{me.name=$('#playerName').value.trim()||'صاحبنا';me.avatar=$('#avatar').value;const c=Math.random().toString(36).slice(2,8).toUpperCase();setupRoom(c)};
+$('#enterRoom').onclick=()=>{me.name=$('#playerName').value.trim()||'صاحبنا';me.avatar=$('#avatar').value;const c=$('#roomCode').value.trim().toUpperCase();if(!c){setStatus('#setupStatus','اكتب كود الغرفة الأول.');return}setupRoom(c)};
+$('#copyCode').onclick=async()=>{const c=$('#roomCode').value;if(!c){setStatus('#setupStatus','أنشئ غرفة أو اكتب كودًا أولًا.');return}try{await navigator.clipboard.writeText(c);setStatus('#setupStatus','تم نسخ الكود!')}catch(e){$('#roomCode').select();setStatus('#setupStatus','حدد الكود وانسخه يدويًا.')}};
+$('#leave').onclick=()=>{$('#lobby').classList.add('hidden');$('#play').classList.add('hidden');$('#setup').classList.remove('hidden')};
+$('#backLobby').onclick=()=>{$('#play').classList.add('hidden');$('#lobby').classList.remove('hidden')};
+$$('.mode').forEach(el=>el.onclick=()=>startGame(el.dataset.game));
+function startGame(mode){activeGame=mode;$('#lobby').classList.add('hidden');$('#play').classList.remove('hidden');const titles={truth:'❤️ صراحة وتحدي',quiz:'🧠 أسئلة وذكاء',wheel:'🎡 عجلة الحظ',world:'🏡 العالم الافتراضي',mix:'🎉 كل الألعاب'};$('#gameTitle').textContent=titles[mode];if(mode==='truth')truthGame();if(mode==='quiz')quizGame();if(mode==='wheel')wheelGame();if(mode==='world')worldGame();if(mode==='mix')mixGame()}
+function truthGame(){const [type,q]=truthQ[Math.floor(Math.random()*truthQ.length)];$('#gameBody').innerHTML=`<div class="big">${type==='صراحة'?'💗':'⚡'} ${type}</div><div class="card big" id="prompt">${q}</div><div class="row"><button id="nextTruth">سؤال جديد</button><button class="secondary" id="switchTruth">بدّل صراحة/تحدي</button></div>`;$('#nextTruth').onclick=truthGame;$('#switchTruth').onclick=()=>{let options=truthQ.filter(x=>x[0]!==type);const item=options[Math.floor(Math.random()*options.length)];$('#prompt').textContent=item[1];$('#prompt').previousElementSibling.textContent=item[0]==='صراحة'?'💗 صراحة':'⚡ تحدي'}}
+let qi=0;
+function quizGame(){qi=Math.floor(Math.random()*quizzes.length);const q=quizzes[qi];$('#gameBody').innerHTML=`<div class="big">${q.q}</div><div class="grid">${q.a.map((a,i)=>`<button data-answer="${i}">${a}</button>`).join('')}</div><p id="quizResult" class="big"></p><p>النقاط: <b id="quizScore">${score}</b></p><button id="nextQuiz" class="secondary">السؤال التالي</button>`;$$('[data-answer]').forEach(b=>b.onclick=()=>{if(b.disabled)return;$$('[data-answer]').forEach(x=>x.disabled=true);if(+b.dataset.answer===q.correct){score++;$('#quizResult').textContent='صح عليك! 🎉';}else $('#quizResult').textContent='مش مشكلة، الإجابة: '+q.a[q.correct];$('#quizScore').textContent=score});$('#nextQuiz').onclick=quizGame}
+function wheelGame(){const names=[me.name,'صاحبك 1','صاحبك 2','صاحبك 3'];$('#gameBody').innerHTML=`<div class="wheel" id="wheel">مين الدور؟</div><div class="big" id="wheelResult">لف العجلة واكتشف!</div><button id="spin" style="display:block;margin:auto">🎡 لف العجلة</button><small>في النسخة الأونلاين النهائية ستظهر أسماء كل اللاعبين الحقيقيين.</small>`;$('#spin').onclick=()=>{const w=$('#wheel');w.style.transform=`rotate(${1440+Math.random()*360}deg)`;$('#spin').disabled=true;setTimeout(()=>{$('#wheelResult').textContent='الدور على: '+names[Math.floor(Math.random()*names.length)]+' 🎯';$('#spin').disabled=false},2050)}}
+function worldGame(){worldX=50;worldY=50;$('#gameBody').innerHTML=`<div class="big">🏡 أهلاً في عالمك يا ${escapeHtml(me.name)}!</div><div style="background:#b9edb0;border:5px solid #75b56e;border-radius:18px;height:250px;position:relative;overflow:hidden" id="world"><div style="position:absolute;left:${worldX}%;top:${worldY}%;transform:translate(-50%,-50%);font-size:42px" id="myAvatar">${me.avatar}</div><span style="position:absolute;left:10%;top:20%;font-size:35px">🌳</span><span style="position:absolute;left:75%;top:65%;font-size:35px">🏠</span><span style="position:absolute;left:20%;top:75%;font-size:35px">🌼</span></div><div class="row"><button data-move="up">⬆️</button><button data-move="left">⬅️</button><button data-move="down">⬇️</button><button data-move="right">➡️</button></div><p>حرّك شخصيتك واستكشف المكان!</p>`;$$('[data-move]').forEach(b=>b.onclick=()=>{const m=b.dataset.move;if(m==='up')worldY-=8;if(m==='down')worldY+=8;if(m==='left')worldX-=8;if(m==='right')worldX+=8;worldX=Math.max(5,Math.min(95,worldX));worldY=Math.max(8,Math.min(92,worldY));$('#myAvatar').style.left=worldX+'%';$('#myAvatar').style.top=worldY+'%'})}
+function mixGame(){const modes=['truth','quiz','wheel','world'];const pick=modes[Math.floor(Math.random()*modes.length)];$('#gameBody').innerHTML=`<div class="big">🎉 خلطة الألعاب اختارت لك جولة عشوائية!</div><button id="playRandom">ابدأ الجولة</button><button id="mixAgain" class="secondary">اختار لعبة ثانية</button>`;$('#playRandom').onclick=()=>startGame(pick);$('#mixAgain').onclick=mixGame}
+$('#sendChat').onclick=sendChat;$('#chatInput').addEventListener('keydown',e=>{if(e.key==='Enter')sendChat()});
+function sendChat(){const t=$('#chatInput').value.trim();if(!t)return;const d=document.createElement('div');d.className='msg';d.textContent=me.avatar+' '+me.name+': '+t;$('#chatlog').appendChild(d);$('#chatInput').value='';$('#chatlog').scrollTop=$('#chatlog').scrollHeight}
+</script></body></html>
